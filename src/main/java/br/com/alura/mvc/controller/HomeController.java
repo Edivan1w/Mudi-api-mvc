@@ -7,26 +7,22 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import br.com.alura.mvc.model.Pedido;
+import br.com.alura.mvc.repository.PedidoRepository;
 
 @Controller
 public class HomeController {
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	private PedidoRepository pedidoRepository;
 	
 	@GetMapping("/home")
 	public String home(Model model) {
-		
-		String query = "select p from Pedido p";
-		List<Pedido> pedidos = entityManager.createQuery(query, Pedido.class).getResultList();
-		
-		
-		
+		List<Pedido> pedidos = pedidoRepository.findAll();
 		model.addAttribute("pedidos", pedidos);
 		return"home";
 	}
