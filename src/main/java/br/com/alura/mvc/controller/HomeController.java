@@ -1,6 +1,7 @@
 package br.com.alura.mvc.controller;
 
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -25,9 +26,9 @@ public class HomeController {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
-	@GetMapping
-	public String home(Model model) {
-		List<Pedido> pedidos = pedidoRepository.findAll();
+	@GetMapping                    //vai acessar os dados do usuário logado.
+	public String home(Model model, Principal principal) {
+		List<Pedido> pedidos = pedidoRepository.findAllByUser(principal.getName());
 		model.addAttribute("pedidos", pedidos);
 		return"home";
 	}

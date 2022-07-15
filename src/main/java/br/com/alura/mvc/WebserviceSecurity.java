@@ -31,7 +31,8 @@ public class WebserviceSecurity extends WebSecurityConfigurerAdapter{
 		   .formLogin(form -> form.loginPage("/login")
 				   .defaultSuccessUrl("/home", true)
 				   .permitAll())
-		   .logout(logout -> logout.logoutUrl("/logout"));
+		   .logout(logout -> logout.logoutUrl("/logout"))
+		   .csrf().disable();
 				   
 	}
 	
@@ -41,11 +42,11 @@ public class WebserviceSecurity extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
+//		
 //		UserDetails userDetails = User
 //				.builder()
-//				.username("joao")
-//				.password(encoder.encode("joao"))
+//				.username("maria")
+//				.password(encoder.encode("123456"))
 //				.roles("ADM")
 //				.build();
 		
@@ -53,7 +54,7 @@ public class WebserviceSecurity extends WebSecurityConfigurerAdapter{
 		.jdbcAuthentication()
 		.dataSource(dataSource)
 		.passwordEncoder(encoder);
-//		.withUser(userDetails);
+        //.withUser(userDetails);
 	}
 	
 	
